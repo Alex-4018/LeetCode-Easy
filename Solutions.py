@@ -16,34 +16,188 @@ class Solution:
 
 
 #7. Reverse Integer
+class Solution:
+    def reverse(self, x: 'int') -> 'int':
+        maxint = 2147483649
+        minint = -2147483648
+        ans = int(str(abs(x))[::-1])
+        return ans * (abs(x)//x) if minint < ans < maxint and ans else 0
+    
+#9. Palindrome Number
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        ans = int(str(abs(x))[::-1])
+        return True if ans==x else False
+####################################
+class Solution:
+    def isPalindrome(self, x):
+        return False if x < 0 else x == int(str(x)[::-1])
+
+#13. Roman to Integer
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        mappings = { 'I':1, 'V':5,"X":10,"L":50,"C":100,"D":500,"M":1000}
+        total = 0
+        for i in range(len(s)-1):
+            if(mappings[s[i]]<mappings[s[i+1]]):
+                total -= mappings[s[i]]
+            else:
+                total += mappings[s[i]]
+            
+        return(total+mappings[s[-1]])
+####################################
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        mappings = { 'I':1, 'V':5,"X":10,"L":50,"C":100,"D":500,"M":1000}
+        total = 0
+        for i in range(len(s)-1):
+             if((s[i]=='I' and s[i+1]=='V') or (s[i]=='I' and s[i+1]=='X')):
+                 total-=1
+             elif((s[i]=='X' and s[i+1]=='L') or (s[i]=='X' and s[i+1]=='C')):
+                 total-=10
+             elif((s[i]=='C' and s[i+1]=='D') or (s[i]=='C' and s[i+1]=='M')):
+                 total-=100
+            else:
+                total += mappings[s[i]]
+            
+        return(total+mappings[s[-1]])
+    
+#14. Longest Common Prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs:
+            return ""
+        prefix = ""
+        for i in range(min(map(len, strs))):
+            ch = strs[0][i]
+            if all(s[i] == ch for s in strs):
+                prefix += ch
+            else:
+                break
+        return prefix
 
 
+#20. Valid Parentheses
+class Solution:
+    def isValid(self, s):
+        bracket_map = {"(": ")", "[": "]",  "{": "}"}
+        open_par = set(["(", "[", "{"])
+        stack = []
+        for i in s:
+            if i in open_par:
+                stack.append(i)
+            elif stack and i == bracket_map[stack[-1]]:
+                    stack.pop()
+            else:
+                return False
+        return stack == []
+############################################
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
 
+        # The stack to keep track of opening brackets.
+        stack = []
 
+        # Hash map for keeping track of mappings. This keeps the code very clean.
+        # Also makes adding more types of parenthesis easier
+        mapping = {")": "(", "}": "{", "]": "["}
 
+        # For every bracket in the expression.
+        for char in s:
 
+            # If the character is an closing bracket
+            if char in mapping:
 
+                # Pop the topmost element from the stack, if it is non empty
+                # Otherwise assign a dummy value of '#' to the top_element variable
+                top_element = stack.pop() if stack else '#'
 
+                # The mapping for the opening bracket in our hash and the top
+                # element of the stack don't match, return False
+                if mapping[char] != top_element:
+                    return False
+            else:
+                # We have an opening bracket, simply push it onto the stack.
+                stack.append(char)
 
+        # In the end, if the stack is empty, then we have a valid expression.
+        # The stack won't be empty for cases like ((()
+        return not stack
 
+21. Merge Two Sorted Lists
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if l1 is None or l2 is None:
+            return l1 if l2 is None else l2
+        else:
+            sm, lg = sorted((l1, l2), key=lambda l: l.val)
+            sm.next = self.mergeTwoLists(sm.next, lg)
+            return sm
+#####################################
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        
+        if l1.val <= l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
 
+26. Remove Duplicates from Sorted Array
+class Solution:
+    def removeDuplicates(self, nums: 'List[int]') -> 'int':
+        for idx in range(len(nums)-1,0,-1): ---In the for loop, the index will change if you delete an element. So it should be traversed from back to front----
+            if nums[idx] == nums[idx-1]:
+                del nums[idx]
+        return len(nums)
+#########################################
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        len_ = 1 ---Might not be correct for other senarios---
+        if len(nums)==0:
+            return 0
+        for i in range(1,len(nums)):
+            if nums[i] != nums[i-1]:
+                nums[len_] = nums[i]
+                len_ +=1
+        return len_
 
+27. Remove Element
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        for i in range(len(nums)-1,-1,-1):
+            if nums[i]==val:
+                del nums[i]
+        return  len(nums)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+28. Implement strStr()
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        try:
+            return haystack.index(needle)
+        except:
+            return -1 
+###################################
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        needle_len = len(needle)
+        for i in range(len(haystack) - needle_len + 1):
+            if haystack[i:i + needle_len] == needle:
+                return i
+        return -1
 
 
 
