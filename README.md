@@ -1,6 +1,5 @@
 # LeetCode-Easy
 LeetCode Algorithm - Easy - Python3 solution
 
-| # | Title | Difficulty |
-|---| ----- | ---------- |
-| 1 | [Two Sum](https://leetcode.com/problems/two-sum/) | Easy |
+
+| Link | [https://leetcode.com/problemset/algorithms/?difficulty=Easy](https://leetcode.com/problemset/algorithms/?difficulty=Easy) | Easy |
