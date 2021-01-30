@@ -199,14 +199,94 @@ class Solution:
                 return i
         return -1
 
+35. Search Insert Position
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        for i in nums:
+            if i==target:
+                return nums.index(i)
+        nums.insert(0,target)
+        return sorted(nums).index(target)
+#####################################
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        copy_nums = nums
+        try:
+            return nums.index(target)
+        except:
+            copy_nums.append(target)
+            return sorted(copy_nums).index(target)
+   
+38. Count and Say
+class Solution:
+    def countAndSay(self, n: int) -> str:
+        result = "1"
+        for _ in range(n - 1):
+            s, curr_digit, count = "", result[0], 1
+            for digit in result[1:]:
+                if digit == curr_digit:
+                    count += 1
+                else:
+                    s += str(count) + curr_digit
+                    curr_digit, count = digit, 1
+            result = s + str(count) + curr_digit
+        return result
+        
+53. Maximum Subarray        
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        for i in range(1,len(nums)):
+            nums[i]=max(nums[i-1]+nums[i],nums[i])
+        return max(nums)
+#####################################
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        allmax = nums[0]
+        curmax = nums[0]
+        for i in nums[1:]:
+            if curmax + i > i:
+                curmax = curmax + i
+            else:
+                curmax = i
+            if curmax > allmax:
+                allmax = curmax
+                
+        return allmax  
+        
 
+58. Length of Last Word        
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        return len(s.strip().split(" ")[-1])
+##########################################
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+		return 0 if len(s.split())==0 else len(s.split()[-1])
 
-
-
-
-
-
-
+66. Plus One
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:     
+        for i in range(len(digits) - 1, -1, -1):
+            digits[i] += 1
+            if digits[i] != 10:
+                return digits
+            digits[i] = 0        
+        return [1] + digits
+################################################
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        if digits[-1] != 9:
+            digits[-1] += 1
+        else:
+            i=-1
+            while -i <= len(digits) and (digits[i] == 9):
+                digits[i] = 0
+                i -= 1
+            if i+1 == -len(digits):
+                digits = [1] + digits
+            else:
+                digits[i] += 1
+        return digits
 
 
 
