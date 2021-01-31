@@ -288,16 +288,71 @@ class Solution:
                 digits[i] += 1
         return digits
 
+67. Add Binary
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        ans = int(a,2) + int(b,2) # strings both in binary. converted to decimal and added
+        return bin(ans)[2:] # converted result back to binary '0bxxxx' and sliced for format
 
+--- Note: bin of any number returns binary---
+--- for ex: - bin(2) = '0b10'---
 
+69. Sqrt(x)
+from numpy import sqrt
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        return int(sqrt(x))
+#################################
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        return int(x ** (1/2))
 
+70. Climbing Stairs
+class Solution:
+def climbStairs(self, n: int) -> int:
+    no_steps = [1]  * (n+1)
+    no_steps[1] = 1    
+    for i in range(2,n+1):
+        no_steps[i] = no_steps[i-1] + no_steps[i-2]       
+    return no_steps[n]
+################################
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2: return n
+        c1, c2, c3 = 0, 1, 2
+        while n > 2:
+            c1, c2 = c2, c3
+            c3 = c1 + c2
+            n -= 1
+        return c3
+###########################
+class Solution:
+    def climbStairs(self, n):
+        a,b = 1,0
+        for _ in range(n):
+            a,b = a+b,a
+        return a
 
+83. Remove Duplicates from Sorted List
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        cur=head
+        while cur:
+            while cur.next and cur.next.val==cur.val:
+                cur.next=cur.next.next
+            cur=cur.next
+        return head
 
-
-
-
-
-
-
-
+88. Merge Sorted Array
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        nums1[m:] = nums2[:n]
+        nums1.sort()
+############################
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        for i in range(len(nums2)):
+            nums1.pop() # To remove the trailing zeros
+        nums1.extend(nums2)
+        nums1.sort()
 
