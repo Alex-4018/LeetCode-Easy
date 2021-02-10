@@ -356,3 +356,50 @@ class Solution:
         nums1.extend(nums2)
         nums1.sort()
 
+	
+100. Same Tree
+class Solution:
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+        if not p and not q: return True
+        if not p or not q: return False
+        if p.val != q.val: return False
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+111. 101. Symmetric Tree
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        return self.ismirror(root,root)
+    def ismirror(self,t1:TreeNode, t2:TreeNode):
+        if t1 is None and t2 is None:
+            return True
+        elif t1 is None or t2 is None:
+            return False
+        return (t1.val == t2.val) and self.ismirror(t1.right, t2.left) and self.ismirror(t1.left, t2.right)
+##################################
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:  
+        if not root:
+            return True 
+        left=root.left
+        right=root.right
+        if not left and not right:
+            return True 
+        def check(t1, t2):
+            if not t1 and not t2:
+                return True
+            if t1 and not t2:
+                return False
+            if not t1 and t2:
+                return False
+            if t1.val!=t2.val:
+                return False
+            return check(t1.left, t2.right) and check(t1.right, t2.left)     
+        return check(left, right)
+
+104. Maximum Depth of Binary Tree
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        else:
+            return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
